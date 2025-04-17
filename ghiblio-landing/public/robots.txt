@@ -1,0 +1,9 @@
+# Allow all crawlers full access
+User-agent: *
+Allow: /
+
+# Disallow nothing (can be added later if needed)
+# Disallow: /admin/
+
+# Sitemap location (Update with your actual production domain)
+Sitemap: https://your-ghiblio-ai-domain.com/sitemap.xml 
