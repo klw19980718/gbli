@@ -1,0 +1,28 @@
+{
+  "HeroSection": {
+    "title": "Transform Text & Photos into Ghibli Illustrations",
+    "description": "A professional AI model turns photos and descriptions into dreamy artworks, offering creators a fairytale illustration experience."
+  },
+  "Navbar": {
+    "home": "Home",
+    "features": "Features",
+    "examples": "Examples",
+    "pricing": "Pricing",
+    "faq": "FAQ"
+  },
+  "Languages": {
+    "en": "English",
+    "zh": "中文"
+  },
+  "Buttons": {
+    "generate": "Generate Now",
+    "remake": "Regenerate",
+    "download": "Download Image",
+    "login": "Login/Register"
+  },
+  "Tabs": {
+    "textToImage": "Text to Image",
+    "imageToImage": "Image to Image",
+    "batch": "Batch Generate"
+  }
+} 

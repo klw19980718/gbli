@@ -1,0 +1,28 @@
+{
+  "HeroSection": {
+    "title": "将文字照片转化为吉卜力插画",
+    "description": "专业 AI 模型将照片与描述转化为梦幻画作，为创作者带来童话般插画体验。"
+  },
+  "Navbar": {
+    "home": "首页",
+    "features": "功能",
+    "examples": "案例展示",
+    "pricing": "价格",
+    "faq": "常见问题"
+  },
+  "Languages": {
+    "en": "English",
+    "zh": "中文"
+  },
+  "Buttons": {
+    "generate": "立即生成",
+    "remake": "重新生成",
+    "download": "下载图片",
+    "login": "登录/注册"
+  },
+  "Tabs": {
+    "textToImage": "文生图",
+    "imageToImage": "图生图",
+    "batch": "批量生图"
+  }
+} 

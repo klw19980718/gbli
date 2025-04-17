@@ -2,17 +2,21 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from 'next/navigation'
+import { usePathname, useParams } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Menu, X, User } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import SimpleLanguageSwitcher from "./simple-language-switcher"
+import { createTranslator } from "@/lib/i18n"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const pathname = usePathname()
-  const isHomePage = pathname === '/';
+  const { locale = 'zh' } = useParams() as { locale?: string };
+  const t = createTranslator(locale);
+  const isHomePage = pathname === `/${locale}`;
   
   // 监听滚动事件，更新滚动状态
   useEffect(() => {
@@ -71,7 +75,7 @@ export function Navbar() {
       };
     } else {
       return {
-        href: `/#${sectionId}`,
+        href: `/${locale}#${sectionId}`,
         onClick: () => setIsMenuOpen(false) // 非首页点击链接时也关闭移动菜单
       };
     }
@@ -80,37 +84,42 @@ export function Navbar() {
   return (
     <nav className={navClasses}>
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2" onClick={() => setIsMenuOpen(false)}>
+        <Link href={`/${locale}`} className="flex items-center space-x-2" onClick={() => setIsMenuOpen(false)}>
           <span className="text-xl font-bold text-[#FFD300]">Ghiblio</span>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-5">
           <a {...getLinkProps('features')} className="text-sm text-white hover:text-[#FFD300] transition-colors">
-            功能特性
+            {t('Navbar.features')}
           </a>
           <a {...getLinkProps('examples')} className="text-sm text-white hover:text-[#FFD300] transition-colors">
-            案例展示
+            {t('Navbar.examples')}
           </a>
           <a {...getLinkProps('pricing')} className="text-sm text-white hover:text-[#FFD300] transition-colors">
-            价格套餐
+            {t('Navbar.pricing')}
           </a>
           <a {...getLinkProps('faq')} className="text-sm text-white hover:text-[#FFD300] transition-colors">
-            常见问题
+            {t('Navbar.faq')}
           </a>
           
-          {/* --- 条件渲染登录按钮或头像 --- */} 
-          {isLoggedIn ? (
-             <Avatar className="h-8 w-8 cursor-pointer" onClick={handleLoginToggle}> {/* 点击头像模拟登出 */} 
-              {/* TODO: 替换为真实用户头像 URL */}
-              <AvatarImage src="/placeholder-user.jpg" alt="User Avatar" /> 
-              <AvatarFallback>U</AvatarFallback> 
-            </Avatar>
-          ) : (
-            <Button size="sm" className="bg-[#FFD300] hover:bg-[#FFD300]/80 text-[#0F0F0F] text-xs" onClick={handleLoginToggle}>
-              <User size={14} className="mr-1" /> 登录/注册
-            </Button>
-          )}
+          {/* 调整顺序，语言切换器放到登录按钮的左侧 */}
+          <div className="flex items-center space-x-3">
+            <SimpleLanguageSwitcher />
+            
+            {/* --- 条件渲染登录按钮或头像 --- */} 
+            {isLoggedIn ? (
+               <Avatar className="h-8 w-8 cursor-pointer" onClick={handleLoginToggle}> {/* 点击头像模拟登出 */} 
+                {/* TODO: 替换为真实用户头像 URL */}
+                <AvatarImage src="/placeholder-user.jpg" alt="User Avatar" /> 
+                <AvatarFallback>U</AvatarFallback> 
+              </Avatar>
+            ) : (
+              <Button size="sm" className="bg-[#FFD300] hover:bg-[#FFD300]/80 text-[#0F0F0F] text-xs" onClick={handleLoginToggle}>
+                <User size={14} className="mr-1" /> {t('Buttons.login')}
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -124,10 +133,24 @@ export function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden absolute w-full top-full left-0 bg-[#0F0F0F] py-3 px-4 shadow-lg border-t border-[rgba(255,255,255,0.1)]"> 
           <div className="flex flex-col space-y-3">
-            <a {...getLinkProps('features')} className="text-sm text-white hover:text-[#FFD300] transition-colors py-1.5">功能特性</a>
-            <a {...getLinkProps('examples')} className="text-sm text-white hover:text-[#FFD300] transition-colors py-1.5">案例展示</a>
-            <a {...getLinkProps('pricing')} className="text-sm text-white hover:text-[#FFD300] transition-colors py-1.5">价格套餐</a>
-            <a {...getLinkProps('faq')} className="text-sm text-white hover:text-[#FFD300] transition-colors py-1.5">常见问题</a>
+            <a {...getLinkProps('features')} className="text-sm text-white hover:text-[#FFD300] transition-colors py-1.5">
+              {t('Navbar.features')}
+            </a>
+            <a {...getLinkProps('examples')} className="text-sm text-white hover:text-[#FFD300] transition-colors py-1.5">
+              {t('Navbar.examples')}
+            </a>
+            <a {...getLinkProps('pricing')} className="text-sm text-white hover:text-[#FFD300] transition-colors py-1.5">
+              {t('Navbar.pricing')}
+            </a>
+            <a {...getLinkProps('faq')} className="text-sm text-white hover:text-[#FFD300] transition-colors py-1.5">
+              {t('Navbar.faq')}
+            </a>
+            
+            {/* 移动端语言切换器 */}
+            <div className="py-2">
+              <SimpleLanguageSwitcher />
+            </div>
+            
             <div className="pt-1">
               {/* --- 移动端条件渲染登录按钮或头像 --- */}
               {isLoggedIn ? (
@@ -140,7 +163,7 @@ export function Navbar() {
                 </div>
                ) : (
                 <Button size="sm" className="bg-[#FFD300] hover:bg-[#FFD300]/80 text-[#0F0F0F] text-xs w-full" onClick={() => { handleLoginToggle(); setIsMenuOpen(false); }}>
-                  <User size={14} className="mr-1" /> 登录/注册
+                  <User size={14} className="mr-1" /> {t('Buttons.login')}
                 </Button>
                )}
             </div>

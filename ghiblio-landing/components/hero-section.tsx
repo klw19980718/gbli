@@ -6,8 +6,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { UploadBox } from "@/components/upload-box"
 import { StyleSelector } from "@/components/style-selector"
 import { ResultDisplay } from "@/components/result-display"
+import { useParams } from 'next/navigation';
+import { createTranslator } from '@/lib/i18n';
 
 export function HeroSection() {
+  const { locale = 'zh' } = useParams() as { locale?: string };
+  const t = createTranslator(locale);
+
   const [isStyleSelectorOpen, setIsStyleSelectorOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState("style")
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null)
@@ -89,10 +94,10 @@ export function HeroSection() {
       <div className="container mx-auto px-4 flex flex-col items-center relative z-20 w-full">
         <div className="text-center max-w-md sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto mb-8">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 font-serif text-white">
-            将文字照片转化为吉卜力插画
+            {t('HeroSection.title')}
           </h1>
           <p className="text-base md:text-lg text-[rgba(255,255,255,0.6)] mb-6">
-            专业 AI 模型将照片与描述转化为梦幻画作，为创作者带来童话般插画体验。
+            {t('HeroSection.description')}
           </p>
           <div className="flex flex-wrap justify-center gap-2 mb-6">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs bg-[#FFD300]/10 text-[#FFD300]">
