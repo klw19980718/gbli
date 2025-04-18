@@ -4,19 +4,76 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useParams } from 'next/navigation'
 import { Button } from "@/components/ui/button"
-import { Menu, X, User } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Menu, X } from "lucide-react"
 import SimpleLanguageSwitcher from "./simple-language-switcher"
 import { createTranslator } from "@/lib/i18n"
+import { useUser } from '@clerk/nextjs'
+import { SignInButton } from './auth/sign-in-button'
+import { UserButton } from './auth/user-button'
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [forceRender, setForceRender] = useState(0)
   const pathname = usePathname()
   const { locale = 'zh' } = useParams() as { locale?: string };
   const t = createTranslator(locale);
   const isHomePage = pathname === `/${locale}`;
+  const { isLoaded, isSignedIn, user } = useUser();
+  
+  // 检查会话存储中是否有登录成功标记
+  useEffect(() => {
+    try {
+      const loginSuccess = sessionStorage.getItem('clerk_login_success');
+      const signupSuccess = sessionStorage.getItem('clerk_signup_success');
+      
+      if (loginSuccess || signupSuccess) {
+        console.log('检测到登录/注册成功标记:', { loginSuccess, signupSuccess });
+        
+        // 清除标记
+        sessionStorage.removeItem('clerk_login_success');
+        sessionStorage.removeItem('clerk_signup_success');
+        
+        // 强制组件重新渲染以刷新用户状态
+        const timer = setTimeout(() => {
+          console.log('强制刷新用户状态...');
+          setForceRender(prev => prev + 1);
+        }, 500);
+        
+        return () => clearTimeout(timer);
+      }
+    } catch (e) {
+      console.log('会话存储访问错误:', e);
+    }
+  }, []);
+  
+  // 添加状态变化日志
+  useEffect(() => {
+    console.log(`Navbar - 用户状态已加载 [渲染${forceRender}]:`, { 
+      isSignedIn, 
+      userId: user?.id,
+      userEmail: user?.primaryEmailAddress?.emailAddress,
+      pathname,
+      time: new Date().toISOString()
+    });
+    
+    // 如果检测到登录状态异常，尝试刷新
+    if (isLoaded && !isSignedIn && forceRender < 3) {
+      const clerkItems = Object.keys(localStorage).filter(key => 
+        key.includes('clerk') || key.includes('__clerk')
+      );
+      
+      if (clerkItems.length > 0) {
+        console.log('检测到Clerk存储项但未登录:', clerkItems);
+        console.log('尝试再次刷新状态...');
+        const timer = setTimeout(() => {
+          setForceRender(prev => prev + 1);
+        }, 1000);
+        
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [isLoaded, isSignedIn, user, pathname, forceRender]);
   
   // 监听滚动事件，更新滚动状态
   useEffect(() => {
@@ -59,13 +116,6 @@ export function Navbar() {
       : "bg-transparent border-transparent" // 透明背景
   }`;
 
-  // --- 模拟登录处理 ---
-  const handleLoginToggle = () => {
-    setIsLoggedIn(!isLoggedIn);
-    // TODO: 此处应调用实际的 Google 登录逻辑
-    console.log("模拟登录状态切换为:", !isLoggedIn);
-  };
-
   // --- 辅助函数：根据是否在首页生成链接属性 ---
   const getLinkProps = (sectionId: string) => {
     if (isHomePage) {
@@ -79,6 +129,24 @@ export function Navbar() {
         onClick: () => setIsMenuOpen(false) // 非首页点击链接时也关闭移动菜单
       };
     }
+  };
+
+  // 渲染认证按钮或用户按钮
+  const renderAuthButton = () => {
+    if (!isLoaded) {
+      // 加载中显示一个占位按钮
+      return (
+        <Button size="sm" className="bg-[#252525] text-transparent animate-pulse text-xs">
+          <span className="opacity-0">加载中</span>
+        </Button>
+      );
+    }
+
+    if (isSignedIn) {
+      return <UserButton locale={locale} />;
+    }
+
+    return <SignInButton locale={locale} />;
   };
 
   return (
@@ -106,19 +174,7 @@ export function Navbar() {
           {/* 调整顺序，语言切换器放到登录按钮的左侧 */}
           <div className="flex items-center space-x-3">
             <SimpleLanguageSwitcher />
-            
-            {/* --- 条件渲染登录按钮或头像 --- */} 
-            {isLoggedIn ? (
-               <Avatar className="h-8 w-8 cursor-pointer" onClick={handleLoginToggle}> {/* 点击头像模拟登出 */} 
-                {/* TODO: 替换为真实用户头像 URL */}
-                <AvatarImage src="/placeholder-user.jpg" alt="User Avatar" /> 
-                <AvatarFallback>U</AvatarFallback> 
-              </Avatar>
-            ) : (
-              <Button size="sm" className="bg-[#FFD300] hover:bg-[#FFD300]/80 text-[#0F0F0F] text-xs" onClick={handleLoginToggle}>
-                <User size={14} className="mr-1" /> {t('Buttons.login')}
-              </Button>
-            )}
+            {renderAuthButton()}
           </div>
         </div>
 
@@ -152,20 +208,7 @@ export function Navbar() {
             </div>
             
             <div className="pt-1">
-              {/* --- 移动端条件渲染登录按钮或头像 --- */}
-              {isLoggedIn ? (
-                <div className="flex items-center space-x-2 py-1.5 cursor-pointer" onClick={() => { handleLoginToggle(); setIsMenuOpen(false); }}>
-                  <Avatar className="h-7 w-7"> 
-                    <AvatarImage src="/placeholder-user.jpg" alt="User Avatar" /> 
-                    <AvatarFallback>U</AvatarFallback> 
-                  </Avatar>
-                  <span className="text-sm text-white">已登录 (点击登出)</span>
-                </div>
-               ) : (
-                <Button size="sm" className="bg-[#FFD300] hover:bg-[#FFD300]/80 text-[#0F0F0F] text-xs w-full" onClick={() => { handleLoginToggle(); setIsMenuOpen(false); }}>
-                  <User size={14} className="mr-1" /> {t('Buttons.login')}
-                </Button>
-               )}
+              {renderAuthButton()}
             </div>
           </div>
         </div>

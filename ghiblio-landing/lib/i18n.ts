@@ -29,7 +29,41 @@ const messages: Record<string, any> = {
       "login": "Login/Register",
       "loggedIn": "Logged In (Click to log out)",
       "choosePlan": "Choose Plan",
-      "planSelected": "Selected"
+      "planSelected": "Selected",
+      "UserButton": {
+        "account": "My Account",
+        "signOut": "Sign Out",
+        "signingOut": "Signing Out...",
+        "profile": "My Profile",
+        "settings": "Settings"
+      }
+    },
+    "AuthModal": {
+      "title": "Welcome Back to Ghiblio",
+      "subtitle": "Sign in to continue to Ghiblio",
+      "signupTitle": "Create an account",
+      "signupSubtitle": "Sign up to start using Ghiblio",
+      "orDivider": "or",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email",
+      "continueButton": "Continue with Email",
+      "processingButton": "Processing...",
+      "noAccount": "Don't have an account?",
+      "haveAccount": "Already have an account?",
+      "signupLink": "Sign up",
+      "loginLink": "Sign in",
+      "securedBy": "Secured by",
+      "accountNotFound": "Account not found. Switching to signup mode.",
+      "verificationTitle": "Check your email",
+      "verificationSubtitle": "We've sent a verification code to your email",
+      "verificationCodeLabel": "Verification Code",
+      "verificationCodePlaceholder": "Enter the 6-digit code",
+      "verifyButton": "Verify",
+      "noCodeReceived": "Didn't receive the code?",
+      "resendCode": "Resend",
+      "verificationSuccess": "Verification successful! You can now log in.",
+      "verificationFailed": "Verification failed. Please try again.",
+      "alreadyVerified": "This code has already been verified. You will be redirected to the homepage."
     },
     "Tabs": {
       "textToImage": "Text to Image",
@@ -288,6 +322,28 @@ const messages: Record<string, any> = {
       "title": "Terms of Service",
       "backToHome": "Back to Home",
       "lastUpdated": "Last updated: April 1, 2024"
+    },
+    "UserButton": {
+      account: {
+        en: 'My Account',
+        zh: '我的账户'
+      },
+      signOut: {
+        en: 'Sign Out',
+        zh: '退出登录'
+      },
+      signingOut: {
+        en: 'Signing Out...',
+        zh: '正在退出...'
+      },
+      profile: {
+        en: 'Profile',
+        zh: '个人资料'
+      },
+      settings: {
+        en: 'Settings',
+        zh: '设置'
+      }
     }
   },
   zh: {
@@ -319,7 +375,41 @@ const messages: Record<string, any> = {
       "login": "登录/注册",
       "loggedIn": "已登录（点击登出）",
       "choosePlan": "选择套餐",
-      "planSelected": "已选择"
+      "planSelected": "已选择",
+      "UserButton": {
+        "account": "我的账户",
+        "signOut": "退出登录",
+        "signingOut": "正在退出...",
+        "profile": "我的资料",
+        "settings": "设置"
+      }
+    },
+    "AuthModal": {
+      "title": "欢迎使用 Ghiblio",
+      "subtitle": "登录以继续使用 Ghiblio",
+      "signupTitle": "创建账户",
+      "signupSubtitle": "注册以开始使用 Ghiblio",
+      "orDivider": "或",
+      "emailLabel": "邮箱",
+      "emailPlaceholder": "请输入您的邮箱",
+      "continueButton": "使用邮箱继续",
+      "processingButton": "处理中...",
+      "noAccount": "还没有账户？",
+      "haveAccount": "已有账户？",
+      "signupLink": "注册",
+      "loginLink": "登录",
+      "securedBy": "安全由",
+      "accountNotFound": "账户未找到。切换到注册模式。",
+      "verificationTitle": "检查你的邮箱",
+      "verificationSubtitle": "我们已经向你的邮箱发送了验证码",
+      "verificationCodeLabel": "验证码",
+      "verificationCodePlaceholder": "输入6位数字验证码",
+      "verifyButton": "验证",
+      "noCodeReceived": "没有收到验证码？",
+      "resendCode": "重新发送",
+      "verificationSuccess": "验证成功！你现在可以登录了。",
+      "verificationFailed": "验证失败。请再试一次。",
+      "alreadyVerified": "此验证码已验证过。你将被重定向到首页。"
     },
     "Tabs": {
       "textToImage": "文生图",
@@ -578,6 +668,28 @@ const messages: Record<string, any> = {
       "title": "服务条款",
       "backToHome": "返回首页",
       "lastUpdated": "最后更新: 2024年4月1日"
+    },
+    "UserButton": {
+      account: {
+        en: 'My Account',
+        zh: '我的账户'
+      },
+      signOut: {
+        en: 'Sign Out',
+        zh: '退出登录'
+      },
+      signingOut: {
+        en: 'Signing Out...',
+        zh: '正在退出...'
+      },
+      profile: {
+        en: 'Profile',
+        zh: '个人资料'
+      },
+      settings: {
+        en: 'Settings',
+        zh: '设置'
+      }
     }
   }
 };
@@ -620,11 +732,24 @@ export function translate(locale: string, key: string): any {
   try {
     // 如果未找到翻译，回退到中文
     const localeMessages = messages[locale] || messages['zh'];
+    
+    // 注释掉调试信息
+    // if (key.startsWith('AuthModal.')) {
+    //   console.log(`尝试翻译 ${key} 使用语言 ${locale}`, localeMessages[key.split('.')[0]]);
+    // }
+    
     const result = getNestedValue(localeMessages, key);
     
-    return result !== undefined ? result : key;
+    if (result === undefined) {
+      // 注释掉警告日志
+      // console.warn(`未找到翻译: ${key} (${locale})`);
+      return key;
+    }
+    
+    return result;
   } catch (error) {
-    console.error(`Translation missing for ${key} in ${locale}`);
+    // 保留错误日志，因为这是实际错误
+    console.error(`Translation missing for ${key} in ${locale}`, error);
     return key;
   }
 }

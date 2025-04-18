@@ -1,0 +1,34 @@
+{
+  "Buttons": {
+    "login": "Login",
+    "loggingIn": "Logging in...",
+    "generate": "Generate",
+    "remake": "Remake",
+    "download": "Download",
+    "choosePlan": "Choose Plan",
+    "planSelected": "Selected"
+  },
+  
+  "UserButton": {
+    "account": "My Account",
+    "signOut": "Sign Out",
+    "signingOut": "Signing out..."
+  },
+  
+  "AuthModal": {
+    "title": "Login",
+    "signupTitle": "Sign Up",
+    "subtitle": "Continue to ghibli",
+    "signupSubtitle": "Create an account to continue",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "Enter your email address",
+    "continueButton": "Continue",
+    "processingButton": "Processing...",
+    "signupLink": "Sign Up",
+    "loginLink": "Login",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "orDivider": "or",
+    "securedBy": "Secured by Clerk"
+  }
+} 

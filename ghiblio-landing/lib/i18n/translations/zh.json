@@ -1,0 +1,34 @@
+{
+  "Buttons": {
+    "login": "登录",
+    "loggingIn": "登录中...",
+    "generate": "开始生成",
+    "remake": "重做",
+    "download": "下载",
+    "choosePlan": "选择方案",
+    "planSelected": "已选择"
+  },
+  
+  "UserButton": {
+    "account": "我的账户",
+    "signOut": "退出登录",
+    "signingOut": "正在退出..."
+  },
+  
+  "AuthModal": {
+    "title": "登录",
+    "signupTitle": "注册",
+    "subtitle": "继续使用 ghibli",
+    "signupSubtitle": "创建一个账户以继续使用",
+    "emailLabel": "电子邮件地址",
+    "emailPlaceholder": "输入您的电子邮件地址",
+    "continueButton": "继续",
+    "processingButton": "处理中...",
+    "signupLink": "注册",
+    "loginLink": "登录",
+    "haveAccount": "已有账户?",
+    "noAccount": "还没有账户?",
+    "orDivider": "或者",
+    "securedBy": "由Clerk提供安全保障"
+  }
+} 
