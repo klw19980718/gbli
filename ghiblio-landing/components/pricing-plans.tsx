@@ -4,42 +4,59 @@ import { useState } from "react"
 import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { useParams } from 'next/navigation'
+import { createTranslator } from '@/lib/i18n'
+
+interface PlanType {
+  id: string;
+  name: string;
+  price: string;
+  description: string;
+  limit: string;
+  features: string[];
+}
 
 export function PricingPlans() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
+  const { locale = 'zh' } = useParams() as { locale?: string }
+  const t = createTranslator(locale)
 
-  const plans = [
+  // 从翻译数据中获取计划信息
+  const plansData = t('PricingPlans.plans')
+  
+  // 构造plans数组
+  const plans: PlanType[] = [
     {
       id: "fresh",
-      name: "鲜鲜版",
-      price: "¥9.9",
-      description: "基础体验用户",
-      limit: "共 20 次",
-      features: ["支持照片/文字生成图", "支持高清下载", "支持多图生成图", "支持精选风格", "无广告", "无水印"],
+      name: plansData.fresh.name,
+      price: plansData.fresh.price,
+      description: plansData.fresh.description,
+      limit: plansData.fresh.limit,
+      features: plansData.fresh.features,
     },
     {
       id: "standard",
-      name: "标准版",
-      price: "¥19.9",
-      description: "高性价比用户",
-      limit: "共 50 次",
-      features: ["包含鲜鲜版所有功能", "支持所有风格（吉卜力/皮克斯等）", "自动提示词推荐"],
+      name: plansData.standard.name,
+      price: plansData.standard.price,
+      description: plansData.standard.description,
+      limit: plansData.standard.limit,
+      features: plansData.standard.features,
     },
     {
       id: "premium",
-      name: "高级版",
-      price: "¥49.9",
-      description: "进阶创作用户",
-      limit: "共 150 次",
-      features: ["包含标准版所有功能", "支持多图合成（如情侣图）", "分辨率提升", "批量导出图像（新功能）"],
+      name: plansData.premium.name,
+      price: plansData.premium.price,
+      description: plansData.premium.description,
+      limit: plansData.premium.limit,
+      features: plansData.premium.features,
     },
     {
       id: "pro",
-      name: "专业版",
-      price: "¥99",
-      description: "专业商用场景用户",
-      limit: "共 300 次",
-      features: ["包含全部功能", "开放 API 调用（新功能）", "提供 1V1 专属支持", "支持商用授权"],
+      name: plansData.pro.name,
+      price: plansData.pro.price,
+      description: plansData.pro.description,
+      limit: plansData.pro.limit,
+      features: plansData.pro.features,
     },
   ]
 
@@ -47,8 +64,8 @@ export function PricingPlans() {
     <section id="pricing" className="py-16 md:py-24 bg-[#0F0F0F]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-white">价格套餐</h2>
-          <p className="text-lg text-[rgba(255,255,255,0.6)] max-w-2xl mx-auto">选择适合你需求的套餐，开始创作吧</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-white">{t('PricingPlans.title')}</h2>
+          <p className="text-lg text-[rgba(255,255,255,0.6)] max-w-2xl mx-auto">{t('PricingPlans.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -71,7 +88,7 @@ export function PricingPlans() {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
-                  {plan.features.map((feature, index) => (
+                  {plan.features.map((feature: string, index: number) => (
                     <li key={index} className="flex items-start">
                       <Check className="h-5 w-5 text-[#FFD300] mr-2 shrink-0" />
                       <span className="text-sm text-[rgba(255,255,255,0.8)]">{feature}</span>
@@ -88,7 +105,7 @@ export function PricingPlans() {
                   }`}
                   onClick={() => setSelectedPlan(plan.id)}
                 >
-                  {selectedPlan === plan.id ? "已选择" : "选择套餐"}
+                  {selectedPlan === plan.id ? t('Buttons.planSelected') : t('Buttons.choosePlan')}
                 </Button>
               </CardFooter>
             </Card>
@@ -96,7 +113,7 @@ export function PricingPlans() {
         </div>
 
         <div className="text-center mt-8 text-sm text-[rgba(255,255,255,0.6)]">
-          所有套餐均为高清、无广告、无水印，可即时下载；高级版以上套餐支持商业用途和 API 接入。
+          {t('PricingPlans.footer')}
         </div>
       </div>
     </section>

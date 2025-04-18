@@ -1,13 +1,27 @@
 "use client"
 
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
+import { createTranslator } from '@/lib/i18n';
 
 export default function TermsOfServicePage() {
   const router = useRouter();
+  const { locale = 'zh' } = useParams() as { locale?: string };
+  const t = createTranslator(locale);
+
+  // 格式化日期，根据语言环境
+  const formatDate = () => {
+    const dateOptions: Intl.DateTimeFormatOptions = { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    };
+    return new Date().toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', dateOptions);
+  };
 
   return (
     <div className="min-h-screen bg-[#0F0F0F] text-[rgba(255,255,255,0.8)] flex flex-col">
@@ -21,14 +35,14 @@ export default function TermsOfServicePage() {
             className="text-white/70 hover:text-white hover:bg-white/10 px-2"
           >
             <ArrowLeft className="mr-1.5 h-4 w-4" />
-            返回
+            {t('Terms.backToHome')}
           </Button>
         </div>
         
         <article className="prose prose-invert prose-lg max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold mb-8 font-serif text-white">服务条款</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-8 font-serif text-white">{t('Terms.title')}</h1>
           
-          <p>更新日期：{new Date().toLocaleDateString('zh-CN')}</p>
+          <p>{t('Terms.lastUpdated')}</p>
           
           <h2 className="text-2xl font-semibold mt-8 mb-4 text-white">1. 接受条款</h2>
           <p>访问和使用 Ghiblio（"服务"），即表示您同意遵守这些服务条款（"条款"）。如果您不同意这些条款，请勿使用本服务。</p>

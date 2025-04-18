@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Download, RefreshCw } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import { createTranslator } from '@/lib/i18n';
 
 interface ResultDisplayProps {
   isLoading: boolean;
@@ -14,6 +16,8 @@ interface ResultDisplayProps {
 }
 
 export function ResultDisplay({ isLoading, imageUrl, onRemake, onDownload }: ResultDisplayProps) {
+  const { locale = 'zh' } = useParams() as { locale?: string };
+  const t = createTranslator(locale);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -44,12 +48,16 @@ export function ResultDisplay({ isLoading, imageUrl, onRemake, onDownload }: Res
 
   return (
     <div className="relative z-40 mt-8 w-full max-w-md sm:max-w-2xl md:max-w-3xl lg:max-w-5xl mx-auto bg-[#1A1A1A] rounded-xl shadow-lg p-4 md:p-6 border border-[rgba(255,255,255,0.1)] animate-fade-in">
-      <h3 className="text-lg font-semibold text-white mb-4 text-center">生成结果</h3>
+      <h3 className="text-lg font-semibold text-white mb-4 text-center">
+        {t('ResultDisplay.title')}
+      </h3>
       
       {isLoading && (
         <div className="flex flex-col items-center justify-center min-h-[200px]">
           <Progress value={progress} className="w-full max-w-md mb-4 h-2 bg-[#252525]" />
-          <p className="text-sm text-[rgba(255,255,255,0.6)]">正在生成中，请稍候...</p>
+          <p className="text-sm text-[rgba(255,255,255,0.6)]">
+            {t('ResultDisplay.loading')}
+          </p>
         </div>
       )}
 
@@ -58,7 +66,7 @@ export function ResultDisplay({ isLoading, imageUrl, onRemake, onDownload }: Res
           <div className="relative w-full aspect-video max-w-xl rounded-lg overflow-hidden mb-4 border border-[rgba(255,255,255,0.1)]">
             <Image 
               src={imageUrl} 
-              alt="生成结果" 
+              alt={t('ResultDisplay.title')} 
               fill 
               className="object-cover"
               unoptimized
@@ -72,7 +80,7 @@ export function ResultDisplay({ isLoading, imageUrl, onRemake, onDownload }: Res
               className="bg-[#252525] text-[#FFD300] hover:bg-[#333] rounded-md px-4 py-1.5 text-xs font-normal border-none"
             >
               <RefreshCw className="mr-1 h-4 w-4" />
-              重新制作
+              {t('Buttons.remake')}
             </Button>
             <Button 
               size="sm"
@@ -80,7 +88,7 @@ export function ResultDisplay({ isLoading, imageUrl, onRemake, onDownload }: Res
               className="bg-[#FFD300] hover:bg-[#e6b400] text-[#0F0F0F] rounded-md px-4 py-1.5 text-xs font-normal"
             >
               <Download className="mr-1 h-4 w-4" />
-              下载图片
+              {t('Buttons.download')}
             </Button>
           </div>
         </div>
@@ -88,7 +96,7 @@ export function ResultDisplay({ isLoading, imageUrl, onRemake, onDownload }: Res
       
       {!isLoading && !imageUrl && (
          <div className="flex flex-col items-center justify-center min-h-[200px]">
-           <p className="text-sm text-[rgba(255,255,255,0.6)]">点击上方"立即生成"开始创作</p>
+           <p className="text-sm text-[rgba(255,255,255,0.6)]">{t('ResultDisplay.clickToGenerate')}</p>
         </div>
       )} 
     </div>

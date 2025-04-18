@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import { X } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useParams } from 'next/navigation'
+import { createTranslator } from '@/lib/i18n'
 
 interface StyleSelectorProps {
   onClose: () => void
@@ -22,6 +24,8 @@ export function StyleSelector({
   initialTab = "style",
 }: StyleSelectorProps) {
   const [activeTab, setActiveTab] = useState(initialTab)
+  const { locale = 'zh' } = useParams() as { locale?: string }
+  const t = createTranslator(locale)
 
   // Set the initial tab when the component mounts
   useEffect(() => {
@@ -29,42 +33,42 @@ export function StyleSelector({
   }, [initialTab])
 
   const styles = [
-    { id: "none", name: "无风格", icon: "🎨" },
-    { id: "ghibli", name: "吉卜力", icon: "🏯", hot: true },
-    { id: "pixar", name: "皮克斯", icon: "🚀" },
-    { id: "shinkai", name: "新海诚", icon: "☁️" },
-    { id: "disney", name: "迪士尼", icon: "🏰" },
-    { id: "realistic", name: "写实风格", icon: "📷" },
-    { id: "anime", name: "二次元风格", icon: "👧" },
-    { id: "sticker", name: "Q版表情贴纸", icon: "😊", hot: true },
-    { id: "chibi", name: "日本小人风格", icon: "👶", hot: true },
+    { id: "none", name: t('StyleSelector.styles.none'), icon: "🎨" },
+    { id: "ghibli", name: t('StyleSelector.styles.ghibli'), icon: "🏯", hot: true },
+    { id: "pixar", name: t('StyleSelector.styles.pixar'), icon: "🚀" },
+    { id: "shinkai", name: t('StyleSelector.styles.shinkai'), icon: "☁️" },
+    { id: "disney", name: t('StyleSelector.styles.disney'), icon: "🏰" },
+    { id: "realistic", name: t('StyleSelector.styles.realistic'), icon: "📷" },
+    { id: "anime", name: t('StyleSelector.styles.anime'), icon: "👧" },
+    { id: "sticker", name: t('StyleSelector.styles.sticker'), icon: "😊", hot: true },
+    { id: "chibi", name: t('StyleSelector.styles.chibi'), icon: "👶", hot: true },
   ]
 
   const ratios = [
-    { id: "square", name: "正方形", icon: "⬛" },
-    { id: "landscape", name: "横版", icon: "🖼️" },
-    { id: "portrait", name: "竖版", icon: "📱" },
+    { id: "square", name: t('StyleSelector.ratios.square'), icon: "⬛" },
+    { id: "landscape", name: t('StyleSelector.ratios.landscape'), icon: "🖼️" },
+    { id: "portrait", name: t('StyleSelector.ratios.portrait'), icon: "📱" },
   ]
 
   const colors = [
-    { id: "none", name: "无色彩", icon: "⚪" },
-    { id: "warm", name: "暖色调", icon: "🔶" },
-    { id: "cold", name: "冷色调", icon: "🔷" },
-    { id: "soft", name: "柔和色调", icon: "🔘" },
-    { id: "vibrant", name: "鲜艳色调", icon: "🌈" },
-    { id: "pastel", name: "粉彩色调", icon: "🧁" },
-    { id: "bw", name: "黑白", icon: "⚫" },
+    { id: "none", name: t('StyleSelector.colors.none'), icon: "⚪" },
+    { id: "warm", name: t('StyleSelector.colors.warm'), icon: "🔶" },
+    { id: "cold", name: t('StyleSelector.colors.cold'), icon: "🔷" },
+    { id: "soft", name: t('StyleSelector.colors.soft'), icon: "🔘" },
+    { id: "vibrant", name: t('StyleSelector.colors.vibrant'), icon: "🌈" },
+    { id: "pastel", name: t('StyleSelector.colors.pastel'), icon: "🧁" },
+    { id: "bw", name: t('StyleSelector.colors.bw'), icon: "⚫" },
   ]
 
   const compositions = [
-    { id: "none", name: "无构图", icon: "⬜" },
-    { id: "blur", name: "背景虚化", icon: "🔍" },
-    { id: "closeup", name: "特写", icon: "👁️" },
-    { id: "wide", name: "广角", icon: "📸" },
-    { id: "depth", name: "景深", icon: "🌫️" },
-    { id: "low", name: "低角度", icon: "↗️" },
-    { id: "high", name: "高角度", icon: "↘️" },
-    { id: "macro", name: "微距", icon: "🔎" },
+    { id: "none", name: t('StyleSelector.compositions.none'), icon: "⬜" },
+    { id: "blur", name: t('StyleSelector.compositions.blur'), icon: "🔍" },
+    { id: "closeup", name: t('StyleSelector.compositions.closeup'), icon: "👁️" },
+    { id: "wide", name: t('StyleSelector.compositions.wide'), icon: "📸" },
+    { id: "depth", name: t('StyleSelector.compositions.depth'), icon: "🌫️" },
+    { id: "low", name: t('StyleSelector.compositions.low'), icon: "↗️" },
+    { id: "high", name: t('StyleSelector.compositions.high'), icon: "↘️" },
+    { id: "macro", name: t('StyleSelector.compositions.macro'), icon: "🔎" },
   ]
 
   return (
@@ -74,7 +78,7 @@ export function StyleSelector({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-4 border-b border-[rgba(255,255,255,0.1)]">
-          <h3 className="text-lg font-medium text-white">选择风格与参数</h3>
+          <h3 className="text-lg font-medium text-white">{t('StyleSelector.title')}</h3>
           <button onClick={onClose} className="text-[rgba(255,255,255,0.6)] hover:text-white">
             <X size={20} />
           </button>
@@ -87,25 +91,25 @@ export function StyleSelector({
                 value="style"
                 className="data-[state=active]:bg-[#FFD300] data-[state=active]:text-[#0F0F0F]"
               >
-                风格分类
+                {t('StyleSelector.tabs.style')}
               </TabsTrigger>
               <TabsTrigger
                 value="ratio"
                 className="data-[state=active]:bg-[#FFD300] data-[state=active]:text-[#0F0F0F]"
               >
-                图片比例
+                {t('StyleSelector.tabs.ratio')}
               </TabsTrigger>
               <TabsTrigger
                 value="color"
                 className="data-[state=active]:bg-[#FFD300] data-[state=active]:text-[#0F0F0F]"
               >
-                色调风格
+                {t('StyleSelector.tabs.color')}
               </TabsTrigger>
               <TabsTrigger
                 value="composition"
                 className="data-[state=active]:bg-[#FFD300] data-[state=active]:text-[#0F0F0F]"
               >
-                构图调整
+                {t('StyleSelector.tabs.composition')}
               </TabsTrigger>
             </TabsList>
           </div>
@@ -121,7 +125,7 @@ export function StyleSelector({
                   >
                     {style.hot && (
                       <span className="absolute top-2 right-2 bg-[#FF3B30] text-white text-xs px-1.5 py-0.5 rounded-full">
-                        热门
+                        {t('UploadBox.styleSection.hot')}
                       </span>
                     )}
                     <span className="text-3xl mb-2">{style.icon}</span>

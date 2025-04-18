@@ -101,16 +101,16 @@ export function HeroSection() {
           </p>
           <div className="flex flex-wrap justify-center gap-2 mb-6">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs bg-[#FFD300]/10 text-[#FFD300]">
-              ChatGPT 4.0 模型
+              {t('HeroSection.badges.model')}
             </span>
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs bg-[#FFD300]/10 text-[#FFD300]">
-              支持上传照片
+              {t('HeroSection.badges.uploadPhoto')}
             </span>
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs bg-[#FFD300]/10 text-[#FFD300]">
-              支持文字生图
+              {t('HeroSection.badges.textToImage')}
             </span>
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs bg-[#FFD300]/20 text-[#FFD300]">
-              免费体验中
+              {t('HeroSection.badges.freeTrial')}
             </span>
           </div>
         </div>
@@ -122,19 +122,19 @@ export function HeroSection() {
                 value="text-to-image"
                 className="text-sm data-[state=active]:bg-[#FFD300] data-[state=active]:text-[#0F0F0F]"
               >
-                文生图
+                {t('Tabs.textToImage')}
               </TabsTrigger>
               <TabsTrigger
                 value="image-to-image"
                 className="text-sm data-[state=active]:bg-[#FFD300] data-[state=active]:text-[#0F0F0F]"
               >
-                图生图
+                {t('Tabs.imageToImage')}
               </TabsTrigger>
               <TabsTrigger
                 value="batch"
                 className="text-sm data-[state=active]:bg-[#FFD300] data-[state=active]:text-[#0F0F0F]"
               >
-                批量生图
+                {t('Tabs.batch')}
               </TabsTrigger>
             </TabsList>
             <TabsContent value="text-to-image">
@@ -150,7 +150,7 @@ export function HeroSection() {
 
           <div className="mt-6 flex justify-end">
             <Button onClick={handleGenerate} className="bg-[#FFD300] hover:bg-[#FFD300]/80 text-[#0F0F0F] px-6 py-1.5 text-base rounded-lg flex items-center gap-2">
-              <span>立即生成</span>
+              <span>{t('Buttons.generate')}</span>
             </Button>
           </div>
         </div>

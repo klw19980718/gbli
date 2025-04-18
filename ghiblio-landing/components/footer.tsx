@@ -1,10 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from 'next/navigation'
+import { usePathname, useParams } from 'next/navigation'
+import { createTranslator } from '@/lib/i18n'
 
 export function Footer() {
   const pathname = usePathname();
+  const { locale = 'zh' } = useParams() as { locale?: string }
+  const t = createTranslator(locale)
   const isHomePage = pathname === '/';
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -39,58 +42,58 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-4 text-white">Ghiblio</h3>
             <p className="text-[rgba(255,255,255,0.6)] text-sm">
-              专业 AI 模型将照片与描述转化为梦幻画作，为创作者带来童话般插画体验。
+              {t('Footer.slogan')}
             </p>
           </div>
 
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">产品</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('Footer.product')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link {...getLinkProps('features')} className="text-[rgba(255,255,255,0.6)] hover:text-[#FFD300] text-sm">
-                  功能特性
+                  {t('Navbar.features')}
                 </Link>
               </li>
               <li>
                 <Link {...getLinkProps('examples')} className="text-[rgba(255,255,255,0.6)] hover:text-[#FFD300] text-sm">
-                  案例展示
+                  {t('Navbar.examples')}
                 </Link>
               </li>
               <li>
                 <Link {...getLinkProps('pricing')} className="text-[rgba(255,255,255,0.6)] hover:text-[#FFD300] text-sm">
-                  价格套餐
+                  {t('Navbar.pricing')}
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">支持</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('Footer.support')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link {...getLinkProps('faq')} className="text-[rgba(255,255,255,0.6)] hover:text-[#FFD300] text-sm">
-                  常见问题
+                  {t('Navbar.faq')}
                 </Link>
               </li>
               <li>
                 <Link href="mailto:support@example.com" className="text-[rgba(255,255,255,0.6)] hover:text-[#FFD300] text-sm">
-                  联系我们
+                  {t('Footer.contactUs')}
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">法律</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('Footer.legal')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/privacy" className="text-[rgba(255,255,255,0.6)] hover:text-[#FFD300] text-sm">
-                  隐私政策
+                  {t('Privacy.title')}
                 </Link>
               </li>
               <li>
                 <Link href="/terms" className="text-[rgba(255,255,255,0.6)] hover:text-[#FFD300] text-sm">
-                  服务条款
+                  {t('Terms.title')}
                 </Link>
               </li>
             </ul>
@@ -98,7 +101,9 @@ export function Footer() {
         </div>
 
         <div className="border-t border-[rgba(255,255,255,0.1)] mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-[rgba(255,255,255,0.6)] text-sm">© {new Date().getFullYear()} Ghiblio. 保留所有权利。</p>
+          <p className="text-[rgba(255,255,255,0.6)] text-sm">
+            {t('Footer.copyright').replace('{year}', new Date().getFullYear().toString())}
+          </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <Link href="#" className="text-[rgba(255,255,255,0.6)] hover:text-[#FFD300]">
               <span className="sr-only">Twitter</span>

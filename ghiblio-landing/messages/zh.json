@@ -18,11 +18,261 @@
     "generate": "立即生成",
     "remake": "重新生成",
     "download": "下载图片",
-    "login": "登录/注册"
+    "login": "登录/注册",
+    "loggedIn": "已登录（点击登出）",
+    "choosePlan": "选择套餐",
+    "planSelected": "已选择"
   },
   "Tabs": {
     "textToImage": "文生图",
     "imageToImage": "图生图",
     "batch": "批量生图"
+  },
+  "FeatureGrid": {
+    "title": "吉卜力图像生成器的强大功能",
+    "subtitle": "我们的吉卜力风格AI图像生成器带来无限可能，将您的想象力转化为充满魔力的吉卜力风格艺术作品。",
+    "features": {
+      "chatgpt": {
+        "title": "ChatGPT 4o模型",
+        "description": "使用 GPT-4 模型理解图像内容与文字描述，精准构图"
+      },
+      "photoTransform": {
+        "title": "照片转吉卜力插画",
+        "description": "上传照片，一键生成吉卜力风格角色与背景"
+      },
+      "multiStyles": {
+        "title": "风格多样化",
+        "description": "包含吉卜力、皮克斯、Q版表情贴纸、幻想水彩等风格"
+      },
+      "characterRedraw": {
+        "title": "角色重绘",
+        "description": "人像上传后自动进行二次元风格转换"
+      },
+      "promptGeneration": {
+        "title": "提示词生成图像",
+        "description": "输入文字也能生成画面，如'城市中的魔法面包店'"
+      },
+      "multiImageComposite": {
+        "title": "多图合成",
+        "description": "多张图合并成一个故事场景图，适合情侣/亲子/宠物合影"
+      }
+    }
+  },
+  "UserExamples": {
+    "title": "用户案例",
+    "subtitle": "图生图创作灵感",
+    "examples": {
+      "wedding": {
+        "title": "浪漫婚礼瞬间",
+        "description": "将珍贵的婚纱照转化为充满吉卜力氛围的浪漫插画。"
+      },
+      "birthday": {
+        "title": "温馨生日派对",
+        "description": "把生日的欢乐时光定格成温馨可爱的吉卜力动画场景。"
+      },
+      "graduation": {
+        "title": "青春毕业纪念",
+        "description": "让毕业的喜悦与不舍在吉卜力画风中留下独特印记。"
+      },
+      "couple": {
+        "title": "甜蜜情侣合影",
+        "description": "捕捉情侣间的甜蜜互动，生成温馨的吉卜力风格二人世界。"
+      },
+      "travel": {
+        "title": "旅途自拍大变身",
+        "description": "将旅行中的自拍照转换成具有故事感的吉卜力动画人物。"
+      },
+      "beach": {
+        "title": "阳光沙滩时光",
+        "description": "和朋友们的海边合影也能拥有清新的吉卜力夏日色彩。"
+      }
+    },
+    "beforeLabel": "原图",
+    "afterLabel": "AI 生成"
+  },
+  "PricingPlans": {
+    "title": "价格套餐",
+    "subtitle": "选择适合你需求的套餐，开始创作吧",
+    "footer": "所有套餐均为高清、无广告、无水印，可即时下载；高级版以上套餐支持商业用途和 API 接入。",
+    "plans": {
+      "fresh": {
+        "name": "鲜鲜版",
+        "price": "¥9.9",
+        "description": "基础体验用户",
+        "limit": "共 20 次",
+        "features": [
+          "支持照片/文字生成图",
+          "支持高清下载",
+          "支持多图生成图",
+          "支持精选风格",
+          "无广告",
+          "无水印"
+        ]
+      },
+      "standard": {
+        "name": "标准版",
+        "price": "¥19.9",
+        "description": "高性价比用户",
+        "limit": "共 50 次",
+        "features": [
+          "包含鲜鲜版所有功能",
+          "支持所有风格（吉卜力/皮克斯等）",
+          "自动提示词推荐"
+        ]
+      },
+      "premium": {
+        "name": "高级版",
+        "price": "¥49.9",
+        "description": "进阶创作用户",
+        "limit": "共 150 次",
+        "features": [
+          "包含标准版所有功能",
+          "支持多图合成（如情侣图）",
+          "分辨率提升",
+          "批量导出图像（新功能）"
+        ]
+      },
+      "pro": {
+        "name": "专业版",
+        "price": "¥99",
+        "description": "专业商用场景用户",
+        "limit": "共 300 次",
+        "features": [
+          "包含全部功能",
+          "开放 API 调用（新功能）",
+          "提供 1V1 专属支持",
+          "支持商用授权"
+        ]
+      }
+    }
+  },
+  "FAQAccordion": {
+    "title": "常见问题",
+    "subtitle": "关于 Ghiblio 的使用方法与功能说明",
+    "questions": [
+      {
+        "question": "什么让 Ghiblio 与其他 AI 图像生成器不同？",
+        "answer": "Ghiblio 基于强大的 GPT-4 模型，图像质量高，成图具备吉卜力独特的风格情绪。"
+      },
+      {
+        "question": "什么是 ChatGPT 4 模型？",
+        "answer": "ChatGPT 4 是 OpenAI 的新一代大语言模型，具备强大的图文理解与生成能力。"
+      },
+      {
+        "question": "我可以生成哪些类型的图像？",
+        "answer": "包括人像、宠物、场景等照片的吉卜力风格转换，支持文字转图与多种风格选择。"
+      },
+      {
+        "question": "需要具备绘画基础吗？",
+        "answer": "不需要，输入文字或上传照片即可，无需任何设计技能即可生成作品。"
+      },
+      {
+        "question": "如何写好提示词？",
+        "answer": "提示词建议包含主语 + 外观特征 + 场景 + 情绪氛围，如'戴草帽的女孩在花海中奔跑'。"
+      },
+      {
+        "question": "为什么提示内容违规？",
+        "answer": "出现违法、人物肖像、品牌元素等受限内容时，模型会自动拦截，避免生成不合规内容。"
+      },
+      {
+        "question": "生成失败了会扣次数吗？",
+        "answer": "不会，失败不扣次数，可免费重试。若异常持续，可联系客服处理。"
+      },
+      {
+        "question": "生成图像是否可商用？",
+        "answer": "高级版及以上支持商用授权，图像可用于项目展示或衍生作品使用。"
+      },
+      {
+        "question": "我的图片安全吗？",
+        "answer": "是的，所有上传内容均加密处理，24 小时自动清除，严格保护用户隐私。"
+      },
+      {
+        "question": "一次套餐最多几张图？",
+        "answer": "鲜鲜版 20 次、标准版 50 次、高级版 150 次、专业版 300 次，详见定价区。"
+      }
+    ]
+  },
+  "Footer": {
+    "slogan": "专业 AI 模型将照片与描述转化为梦幻画作，为创作者带来童话般插画体验。",
+    "product": "产品",
+    "support": "支持",
+    "legal": "法律",
+    "contactUs": "联系我们",
+    "copyright": "© {year} Ghiblio. 保留所有权利。"
+  },
+  "UploadBox": {
+    "textPlaceholder": "描述你想要的画面...",
+    "imagePlaceholder": "添加图像描述（可选），描述越详细，效果越好",
+    "uploadImage": "上传图片",
+    "uploadMultipleImages": "上传多张图片",
+    "uploadSupport": "支持 JPG, PNG",
+    "uploadLimit": "最多可上传 5 张",
+    "addMore": "添加",
+    "styleSection": {
+      "style": "风格分类",
+      "ratio": "图片比例",
+      "color": "色调风格",
+      "composition": "构图调整",
+      "hot": "热门"
+    }
+  },
+  "StyleSelector": {
+    "title": "选择风格与参数",
+    "tabs": {
+      "style": "风格分类",
+      "ratio": "图片比例",
+      "color": "色调风格",
+      "composition": "构图调整"
+    },
+    "styles": {
+      "none": "无风格",
+      "ghibli": "吉卜力",
+      "pixar": "皮克斯",
+      "shinkai": "新海诚",
+      "disney": "迪士尼",
+      "realistic": "写实风格",
+      "anime": "二次元风格",
+      "sticker": "Q版表情贴纸",
+      "chibi": "日本小人风格"
+    },
+    "ratios": {
+      "square": "正方形",
+      "landscape": "横版",
+      "portrait": "竖版"
+    },
+    "colors": {
+      "none": "无色彩",
+      "warm": "暖色调",
+      "cold": "冷色调",
+      "soft": "柔和色调",
+      "vibrant": "鲜艳色调",
+      "pastel": "粉彩色调",
+      "bw": "黑白"
+    },
+    "compositions": {
+      "none": "无构图",
+      "blur": "背景虚化",
+      "closeup": "特写",
+      "wide": "广角",
+      "depth": "景深",
+      "low": "低角度",
+      "high": "高角度",
+      "macro": "微距"
+    }
+  },
+  "ResultDisplay": {
+    "title": "生成结果",
+    "loading": "正在生成中，请稍候...",
+    "clickToGenerate": "点击上方按钮开始创作"
+  },
+  "Privacy": {
+    "title": "隐私政策",
+    "backToHome": "返回首页",
+    "lastUpdated": "最后更新: 2024年4月1日"
+  },
+  "Terms": {
+    "title": "服务条款",
+    "backToHome": "返回首页",
+    "lastUpdated": "最后更新: 2024年4月1日"
   }
 } 

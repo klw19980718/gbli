@@ -1,43 +1,48 @@
 "use client"
 
 import { ImageComparisonSlider } from "@/components/ui/image-comparison-slider"
+import { useParams } from 'next/navigation'
+import { createTranslator } from '@/lib/i18n'
 
 export function UserExamples() {
+  const { locale = 'zh' } = useParams() as { locale?: string }
+  const t = createTranslator(locale)
+
   const examples = [
     {
       id: 3,
-      title: "浪漫婚礼瞬间",
-      description: "将珍贵的婚纱照转化为充满吉卜力氛围的浪漫插画。",
+      title: t('UserExamples.examples.wedding.title'),
+      description: t('UserExamples.examples.wedding.description'),
       alt: "婚礼照片转吉卜力风格",
     },
     {
       id: 4,
-      title: "温馨生日派对",
-      description: "把生日的欢乐时光定格成温馨可爱的吉卜力动画场景。",
+      title: t('UserExamples.examples.birthday.title'),
+      description: t('UserExamples.examples.birthday.description'),
       alt: "生日派对照片转吉卜力风格",
     },
     {
       id: 5,
-      title: "青春毕业纪念",
-      description: "让毕业的喜悦与不舍在吉卜力画风中留下独特印记。",
+      title: t('UserExamples.examples.graduation.title'),
+      description: t('UserExamples.examples.graduation.description'),
       alt: "毕业照片转吉卜力风格",
     },
     {
       id: 6,
-      title: "甜蜜情侣合影",
-      description: "捕捉情侣间的甜蜜互动，生成温馨的吉卜力风格二人世界。",
+      title: t('UserExamples.examples.couple.title'),
+      description: t('UserExamples.examples.couple.description'),
       alt: "情侣照片转吉卜力风格",
     },
     {
       id: 7,
-      title: "旅途自拍大变身",
-      description: "将旅行中的自拍照转换成具有故事感的吉卜力动画人物。",
+      title: t('UserExamples.examples.travel.title'),
+      description: t('UserExamples.examples.travel.description'),
       alt: "旅行自拍照片转吉卜力风格",
     },
     {
       id: 8,
-      title: "阳光沙滩时光",
-      description: "和朋友们的海边合影也能拥有清新的吉卜力夏日色彩。",
+      title: t('UserExamples.examples.beach.title'),
+      description: t('UserExamples.examples.beach.description'),
       alt: "沙滩合影照片转吉卜力风格",
     },
   ]
@@ -46,8 +51,8 @@ export function UserExamples() {
     <section id="examples" className="py-16 md:py-24 bg-[#0F0F0F]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-white">用户案例</h2>
-          <p className="text-lg text-[rgba(255,255,255,0.6)] max-w-2xl mx-auto">图生图创作灵感</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-white">{t('UserExamples.title')}</h2>
+          <p className="text-lg text-[rgba(255,255,255,0.6)] max-w-2xl mx-auto">{t('UserExamples.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -64,8 +69,8 @@ export function UserExamples() {
                 <ImageComparisonSlider 
                   beforeImage={`/images/${example.id}a.png`} 
                   afterImage={`/images/${example.id}b.png`} 
-                  beforeLabel="原图"
-                  afterLabel="AI 生成"
+                  beforeLabel={t('UserExamples.beforeLabel')}
+                  afterLabel={t('UserExamples.afterLabel')}
                 />
               </div>
             </div>

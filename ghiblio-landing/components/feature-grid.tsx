@@ -1,36 +1,43 @@
+"use client"
+
 import { Bot, ImageIcon, Palette, Users, Sparkles, Layers } from "lucide-react"
+import { useParams } from 'next/navigation'
+import { createTranslator } from '@/lib/i18n'
 
 export function FeatureGrid() {
+  const { locale = 'zh' } = useParams() as { locale?: string }
+  const t = createTranslator(locale)
+
   const features = [
     {
       icon: <Bot className="h-10 w-10 text-[#FFD300]" />,
-      title: "ChatGPT 4o模型",
-      description: "使用 GPT-4 模型理解图像内容与文字描述，精准构图",
+      title: t('FeatureGrid.features.chatgpt.title'),
+      description: t('FeatureGrid.features.chatgpt.description'),
     },
     {
       icon: <ImageIcon className="h-10 w-10 text-[#FFD300]" />,
-      title: "照片转吉卜力插画",
-      description: "上传照片，一键生成吉卜力风格角色与背景",
+      title: t('FeatureGrid.features.photoTransform.title'),
+      description: t('FeatureGrid.features.photoTransform.description'),
     },
     {
       icon: <Palette className="h-10 w-10 text-[#FFD300]" />,
-      title: "风格多样化",
-      description: "包含吉卜力、皮克斯、Q版表情贴纸、幻想水彩等风格",
+      title: t('FeatureGrid.features.multiStyles.title'),
+      description: t('FeatureGrid.features.multiStyles.description'),
     },
     {
       icon: <Users className="h-10 w-10 text-[#FFD300]" />,
-      title: "角色重绘",
-      description: "人像上传后自动进行二次元风格转换",
+      title: t('FeatureGrid.features.characterRedraw.title'),
+      description: t('FeatureGrid.features.characterRedraw.description'),
     },
     {
       icon: <Sparkles className="h-10 w-10 text-[#FFD300]" />,
-      title: "提示词生成图像",
-      description: '输入文字也能生成画面，如"城市中的魔法面包店"',
+      title: t('FeatureGrid.features.promptGeneration.title'),
+      description: t('FeatureGrid.features.promptGeneration.description'),
     },
     {
       icon: <Layers className="h-10 w-10 text-[#FFD300]" />,
-      title: "多图合成",
-      description: "多张图合并成一个故事场景图，适合情侣/亲子/宠物合影",
+      title: t('FeatureGrid.features.multiImageComposite.title'),
+      description: t('FeatureGrid.features.multiImageComposite.description'),
     },
   ]
 
@@ -38,9 +45,9 @@ export function FeatureGrid() {
     <section id="features" className="py-16 md:py-24 bg-[#0F0F0F]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-white">吉卜力图像生成器的强大功能</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-white">{t('FeatureGrid.title')}</h2>
           <p className="text-lg text-[rgba(255,255,255,0.6)] max-w-2xl mx-auto">
-            我们的吉卜力风格AI图像生成器带来无限可能，将您的想象力转化为充满魔力的吉卜力风格艺术作品。
+            {t('FeatureGrid.subtitle')}
           </p>
         </div>
 

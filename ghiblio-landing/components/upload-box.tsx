@@ -12,6 +12,8 @@ import {
   PopoverContent, 
   PopoverTrigger 
 } from "@/components/ui/popover"
+import { useParams } from 'next/navigation'
+import { createTranslator } from '@/lib/i18n'
 
 interface UploadBoxProps {
   type: "text" | "image" | "batch"
@@ -21,58 +23,69 @@ interface UploadBoxProps {
 type Option = { id: string; name: string; icon: string; hot?: boolean }
 
 // 将选项数据移到组件外部或常量文件中更佳，此处为简化
-const styleOptions: Option[] = [
-  { id: "none", name: "无风格", icon: "🎨" },
-  { id: "ghibli", name: "吉卜力", icon: "🏯", hot: true },
-  { id: "pixar", name: "皮克斯", icon: "🚀" },
-  { id: "shinkai", name: "新海诚", icon: "☁️" },
-  { id: "disney", name: "迪士尼", icon: "🏰" },
-  { id: "realistic", name: "写实风格", icon: "📷" },
-  { id: "anime", name: "二次元风格", icon: "👧" },
-  { id: "sticker", name: "Q版表情贴纸", icon: "😊", hot: true },
-  { id: "chibi", name: "日本小人风格", icon: "👶", hot: true },
+const getStyleOptions = (t: (key: string) => string): Option[] => [
+  { id: "none", name: t('StyleSelector.styles.none'), icon: "🎨" },
+  { id: "ghibli", name: t('StyleSelector.styles.ghibli'), icon: "🏯", hot: true },
+  { id: "pixar", name: t('StyleSelector.styles.pixar'), icon: "🚀" },
+  { id: "shinkai", name: t('StyleSelector.styles.shinkai'), icon: "☁️" },
+  { id: "disney", name: t('StyleSelector.styles.disney'), icon: "🏰" },
+  { id: "realistic", name: t('StyleSelector.styles.realistic'), icon: "📷" },
+  { id: "anime", name: t('StyleSelector.styles.anime'), icon: "👧" },
+  { id: "sticker", name: t('StyleSelector.styles.sticker'), icon: "😊", hot: true },
+  { id: "chibi", name: t('StyleSelector.styles.chibi'), icon: "👶", hot: true },
 ]
-const ratioOptions: Option[] = [
-  { id: "square", name: "正方形", icon: "⬛" },
-  { id: "landscape", name: "横版", icon: "🖼️" },
-  { id: "portrait", name: "竖版", icon: "📱" },
+
+const getRatioOptions = (t: (key: string) => string): Option[] => [
+  { id: "square", name: t('StyleSelector.ratios.square'), icon: "⬛" },
+  { id: "landscape", name: t('StyleSelector.ratios.landscape'), icon: "🖼️" },
+  { id: "portrait", name: t('StyleSelector.ratios.portrait'), icon: "📱" },
 ]
-const colorOptions: Option[] = [
-  { id: "none", name: "无色彩", icon: "⚪" },
-  { id: "warm", name: "暖色调", icon: "🔶" },
-  { id: "cold", name: "冷色调", icon: "🔷" },
-  { id: "soft", name: "柔和色调", icon: "🔘" },
-  { id: "vibrant", name: "鲜艳色调", icon: "🌈" },
-  { id: "pastel", name: "粉彩色调", icon: "🧁" },
-  { id: "bw", name: "黑白", icon: "⚫" },
+
+const getColorOptions = (t: (key: string) => string): Option[] => [
+  { id: "none", name: t('StyleSelector.colors.none'), icon: "⚪" },
+  { id: "warm", name: t('StyleSelector.colors.warm'), icon: "🔶" },
+  { id: "cold", name: t('StyleSelector.colors.cold'), icon: "🔷" },
+  { id: "soft", name: t('StyleSelector.colors.soft'), icon: "🔘" },
+  { id: "vibrant", name: t('StyleSelector.colors.vibrant'), icon: "🌈" },
+  { id: "pastel", name: t('StyleSelector.colors.pastel'), icon: "🧁" },
+  { id: "bw", name: t('StyleSelector.colors.bw'), icon: "⚫" },
 ]
-const compositionOptions: Option[] = [
-  { id: "none", name: "无构图", icon: "⬜" },
-  { id: "blur", name: "背景虚化", icon: "🔍" },
-  { id: "closeup", name: "特写", icon: "👁️" },
-  { id: "wide", name: "广角", icon: "📸" },
-  { id: "depth", name: "景深", icon: "🌫️" },
-  { id: "low", name: "低角度", icon: "↗️" },
-  { id: "high", name: "高角度", icon: "↘️" },
-  { id: "macro", name: "微距", icon: "🔎" },
+
+const getCompositionOptions = (t: (key: string) => string): Option[] => [
+  { id: "none", name: t('StyleSelector.compositions.none'), icon: "⬜" },
+  { id: "blur", name: t('StyleSelector.compositions.blur'), icon: "🔍" },
+  { id: "closeup", name: t('StyleSelector.compositions.closeup'), icon: "👁️" },
+  { id: "wide", name: t('StyleSelector.compositions.wide'), icon: "📸" },
+  { id: "depth", name: t('StyleSelector.compositions.depth'), icon: "🌫️" },
+  { id: "low", name: t('StyleSelector.compositions.low'), icon: "↗️" },
+  { id: "high", name: t('StyleSelector.compositions.high'), icon: "↘️" },
+  { id: "macro", name: t('StyleSelector.compositions.macro'), icon: "🔎" },
 ]
 
 // 查找初始选项的辅助函数
-const findInitialOption = (options: Option[], initialName: string): Option => {
-  return options.find(opt => opt.name === initialName) || options[0];
+const findInitialOption = (options: Option[], id: string): Option => {
+  return options.find(opt => opt.id === id) || options[0];
 };
 
 export function UploadBox({ type }: UploadBoxProps) {
+  const { locale = 'zh' } = useParams() as { locale?: string };
+  const t = createTranslator(locale);
+  
+  const styleOptions = getStyleOptions(t);
+  const ratioOptions = getRatioOptions(t);
+  const colorOptions = getColorOptions(t);
+  const compositionOptions = getCompositionOptions(t);
+
   const [text, setText] = useState("")
   const [files, setFiles] = useState<File[]>([])
   const [previews, setPreviews] = useState<string[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
   
   // 风格选择状态
-  const [style, setStyle] = useState<Option>(findInitialOption(styleOptions, "吉卜力"))
-  const [ratio, setRatio] = useState<Option>(findInitialOption(ratioOptions, "正方形"))
-  const [color, setColor] = useState<Option>(findInitialOption(colorOptions, "冷色调"))
-  const [composition, setComposition] = useState<Option>(findInitialOption(compositionOptions, "低角度"))
+  const [style, setStyle] = useState<Option>(findInitialOption(styleOptions, "ghibli"))
+  const [ratio, setRatio] = useState<Option>(findInitialOption(ratioOptions, "square"))
+  const [color, setColor] = useState<Option>(findInitialOption(colorOptions, "cold"))
+  const [composition, setComposition] = useState<Option>(findInitialOption(compositionOptions, "low"))
   
   // 移除旧的下拉选择器状态
   // const [activeSelector, setActiveSelector] = useState<"style" | "ratio" | "color" | "composition" | null>(null)
@@ -138,7 +151,7 @@ export function UploadBox({ type }: UploadBoxProps) {
           <span className="text-xs text-white">{option.name}</span>
           {option.hot && (
             <span className="absolute right-1.5 bg-[#FF3B30] text-white text-[9px] px-0.5 py-0.5 rounded-full">
-              热门
+              {t('UploadBox.styleSection.hot')}
             </span>
           )}
         </div>
@@ -234,7 +247,7 @@ export function UploadBox({ type }: UploadBoxProps) {
     return (
       <div className="w-full mx-auto">
         <Textarea
-          placeholder="描述你想要的画面..."
+          placeholder={t('UploadBox.textPlaceholder')}
           className={`text-sm bg-[#1A1A1A] border-[rgba(255,255,255,0.1)] text-white placeholder:text-[rgba(255,255,255,0.4)] resize-none rounded-lg ${consistentMinHeightClass}`} // 使用 min-height
           value={text}
           onChange={handleTextChange}
@@ -316,11 +329,11 @@ export function UploadBox({ type }: UploadBoxProps) {
                     <div 
                       className="flex items-center justify-center aspect-square border border-dashed border-[rgba(255,255,255,0.2)] rounded-sm bg-[#252525]/50 cursor-pointer hover:bg-[#333]/50 transition-colors" 
                       onClick={triggerFileInput}
-                      title="添加图片"
+                      title={t('UploadBox.addMore')}
                     > 
                       <div className="flex flex-col items-center text-[rgba(255,255,255,0.6)] scale-90"> 
                         <Upload size={18} />
-                        <span className="mt-0.5 text-[10px]">添加</span> 
+                        <span className="mt-0.5 text-[10px]">{t('UploadBox.addMore')}</span> 
                       </div>
                     </div>
                   )}
@@ -336,8 +349,8 @@ export function UploadBox({ type }: UploadBoxProps) {
               <div className="bg-[#252525] p-2.5 rounded-full mb-3">
                  {type === "image" ? (<ImageIcon size={20} className="text-[#FFD300]" />) : (<Upload size={20} className="text-[#FFD300]" />) } 
               </div>
-              <p className="text-sm font-medium mb-1 text-white">{type === "image" ? "上传图片" : "上传多张图片"}</p>
-              <p className="text-xs text-[rgba(255,255,255,0.6)]">{type === "image" ? "支持 JPG, PNG" : "最多可上传 5 张"}</p>
+              <p className="text-sm font-medium mb-1 text-white">{type === "image" ? t('UploadBox.uploadImage') : t('UploadBox.uploadMultipleImages')}</p>
+              <p className="text-xs text-[rgba(255,255,255,0.6)]">{type === "image" ? t('UploadBox.uploadSupport') : t('UploadBox.uploadLimit')}</p>
             </div>
           )}
         </div>
@@ -345,7 +358,7 @@ export function UploadBox({ type }: UploadBoxProps) {
         {/* 右侧：文本输入区域 */} 
         <div>
           <Textarea
-            placeholder="添加图像描述（可选），描述越详细，效果越好"
+            placeholder={t('UploadBox.imagePlaceholder')}
             className={`text-sm bg-[#1A1A1A] border-[rgba(255,255,255,0.1)] text-white placeholder:text-[rgba(255,255,255,0.4)] resize-none rounded-lg ${consistentMinHeightClass}`} // 使用 min-height
             value={text}
             onChange={handleTextChange}

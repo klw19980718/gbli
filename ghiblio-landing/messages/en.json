@@ -18,11 +18,261 @@
     "generate": "Generate Now",
     "remake": "Regenerate",
     "download": "Download Image",
-    "login": "Login/Register"
+    "login": "Login/Register",
+    "loggedIn": "Logged In (Click to log out)",
+    "choosePlan": "Choose Plan",
+    "planSelected": "Selected"
   },
   "Tabs": {
     "textToImage": "Text to Image",
     "imageToImage": "Image to Image",
     "batch": "Batch Generate"
+  },
+  "FeatureGrid": {
+    "title": "Powerful Features of Ghibli Image Generator",
+    "subtitle": "Our Ghibli-style AI image generator brings unlimited possibilities, transforming your imagination into magical Ghibli-style artwork.",
+    "features": {
+      "chatgpt": {
+        "title": "ChatGPT 4o Model",
+        "description": "Uses GPT-4 model to understand image content and text descriptions, creating precise compositions"
+      },
+      "photoTransform": {
+        "title": "Photo to Ghibli Illustration",
+        "description": "Upload photos to instantly generate Ghibli-style characters and backgrounds"
+      },
+      "multiStyles": {
+        "title": "Multiple Styles",
+        "description": "Includes Ghibli, Pixar, Q-version stickers, fantasy watercolor, and more styles"
+      },
+      "characterRedraw": {
+        "title": "Character Redrawing",
+        "description": "Portraits are automatically transformed into anime style"
+      },
+      "promptGeneration": {
+        "title": "Prompt to Image Generation",
+        "description": "Text input can also generate images, like \"Magical bakery in the city\""
+      },
+      "multiImageComposite": {
+        "title": "Multi-Image Composition",
+        "description": "Combine multiple images into one scene, perfect for couples/family/pet photos"
+      }
+    }
+  },
+  "UserExamples": {
+    "title": "User Examples",
+    "subtitle": "Image-to-Image Creative Inspiration",
+    "examples": {
+      "wedding": {
+        "title": "Romantic Wedding Moments",
+        "description": "Transform your precious wedding photos into romantic illustrations with Ghibli atmosphere."
+      },
+      "birthday": {
+        "title": "Cozy Birthday Party",
+        "description": "Capture birthday joy in warm, adorable Ghibli animation scenes."
+      },
+      "graduation": {
+        "title": "Youth Graduation Memories",
+        "description": "Let graduation joy and farewell leave a unique mark in Ghibli style."
+      },
+      "couple": {
+        "title": "Sweet Couple Photos",
+        "description": "Capture sweet interactions between couples, generating cozy Ghibli-style two-person worlds."
+      },
+      "travel": {
+        "title": "Travel Selfie Transformation",
+        "description": "Convert travel selfies into Ghibli animation characters with storytelling quality."
+      },
+      "beach": {
+        "title": "Sunny Beach Time",
+        "description": "Beach photos with friends can have fresh Ghibli summer colors."
+      }
+    },
+    "beforeLabel": "Original",
+    "afterLabel": "AI Generated"
+  },
+  "PricingPlans": {
+    "title": "Pricing Plans",
+    "subtitle": "Choose a plan that fits your needs and start creating",
+    "footer": "All plans include high-definition, ad-free, watermark-free images with instant download; Premium plans and above support commercial use and API access.",
+    "plans": {
+      "fresh": {
+        "name": "Fresh Plan",
+        "price": "$1.99",
+        "description": "Basic experience users",
+        "limit": "20 generations",
+        "features": [
+          "Support photo/text to image",
+          "HD download",
+          "Multi-image generation",
+          "Selected styles",
+          "No ads",
+          "No watermark"
+        ]
+      },
+      "standard": {
+        "name": "Standard Plan",
+        "price": "$3.99",
+        "description": "High value users",
+        "limit": "50 generations",
+        "features": [
+          "Includes all Fresh Plan features",
+          "All styles (Ghibli/Pixar, etc.)",
+          "Auto prompt suggestion"
+        ]
+      },
+      "premium": {
+        "name": "Premium Plan",
+        "price": "$9.99",
+        "description": "Advanced creative users",
+        "limit": "150 generations",
+        "features": [
+          "Includes all Standard Plan features",
+          "Multi-image composition (e.g. couple photos)",
+          "Resolution enhancement",
+          "Batch export images (New feature)"
+        ]
+      },
+      "pro": {
+        "name": "Professional Plan",
+        "price": "$19.99",
+        "description": "Professional commercial users",
+        "limit": "300 generations",
+        "features": [
+          "Includes all features",
+          "API access (New feature)",
+          "1-on-1 dedicated support",
+          "Commercial use license"
+        ]
+      }
+    }
+  },
+  "FAQAccordion": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Instructions and feature explanations about Ghiblio",
+    "questions": [
+      {
+        "question": "What makes Ghiblio different from other AI image generators?",
+        "answer": "Ghiblio is based on the powerful GPT-4 model, offering high image quality with unique Ghibli style emotions."
+      },
+      {
+        "question": "What is the ChatGPT 4 model?",
+        "answer": "ChatGPT 4 is OpenAI's next-generation large language model with powerful image and text understanding capabilities."
+      },
+      {
+        "question": "What types of images can I generate?",
+        "answer": "Includes portraits, pets, scenes, and more in Ghibli style, supporting text-to-image and multiple style choices."
+      },
+      {
+        "question": "Do I need artistic skills?",
+        "answer": "No, just input text or upload photos - no design skills needed to create artwork."
+      },
+      {
+        "question": "How do I write good prompts?",
+        "answer": "Prompts should include subject + appearance features + scene + mood, like 'Girl with straw hat running in a flower field'."
+      },
+      {
+        "question": "Why is my prompt flagged as inappropriate?",
+        "answer": "When illegal content, portraits, or brand elements appear, the model automatically blocks them to avoid generating non-compliant content."
+      },
+      {
+        "question": "Will I be charged for failed generations?",
+        "answer": "No, failures don't count against your quota and you can retry for free. Contact support if issues persist."
+      },
+      {
+        "question": "Can I use generated images commercially?",
+        "answer": "Premium Plan and above include commercial licenses; images can be used for project displays or derivative works."
+      },
+      {
+        "question": "Are my images safe?",
+        "answer": "Yes, all uploaded content is encrypted and automatically deleted after 24 hours, strictly protecting user privacy."
+      },
+      {
+        "question": "How many images per plan?",
+        "answer": "Fresh Plan 20 times, Standard Plan 50 times, Premium Plan 150 times, Professional Plan 300 times. See pricing section for details."
+      }
+    ]
+  },
+  "Footer": {
+    "slogan": "Professional AI models transform photos and descriptions into dreamy artworks, bringing creators a fairy tale illustration experience.",
+    "product": "Product",
+    "support": "Support",
+    "legal": "Legal",
+    "contactUs": "Contact Us",
+    "copyright": "© {year} Ghiblio. All rights reserved."
+  },
+  "UploadBox": {
+    "textPlaceholder": "Describe the scene you want...",
+    "imagePlaceholder": "Add image description (optional), more detailed descriptions yield better results",
+    "uploadImage": "Upload Image",
+    "uploadMultipleImages": "Upload Multiple Images",
+    "uploadSupport": "Supports JPG, PNG",
+    "uploadLimit": "Maximum 5 images",
+    "addMore": "Add",
+    "styleSection": {
+      "style": "Style Category",
+      "ratio": "Image Ratio",
+      "color": "Color Style",
+      "composition": "Composition Adjustment",
+      "hot": "Hot"
+    }
+  },
+  "StyleSelector": {
+    "title": "Choose Style and Parameters",
+    "tabs": {
+      "style": "Style Category",
+      "ratio": "Image Ratio",
+      "color": "Color Style",
+      "composition": "Composition"
+    },
+    "styles": {
+      "none": "No Style",
+      "ghibli": "Ghibli",
+      "pixar": "Pixar",
+      "shinkai": "Makoto Shinkai",
+      "disney": "Disney",
+      "realistic": "Realistic Style",
+      "anime": "Anime Style",
+      "sticker": "Q-Version Sticker",
+      "chibi": "Japanese Chibi Style"
+    },
+    "ratios": {
+      "square": "Square",
+      "landscape": "Landscape",
+      "portrait": "Portrait"
+    },
+    "colors": {
+      "none": "No Color Theme",
+      "warm": "Warm Tones",
+      "cold": "Cold Tones",
+      "soft": "Soft Tones",
+      "vibrant": "Vibrant Colors",
+      "pastel": "Pastel Colors",
+      "bw": "Black & White"
+    },
+    "compositions": {
+      "none": "No Composition",
+      "blur": "Background Blur",
+      "closeup": "Close-up",
+      "wide": "Wide Angle",
+      "depth": "Depth of Field",
+      "low": "Low Angle",
+      "high": "High Angle",
+      "macro": "Macro"
+    }
+  },
+  "ResultDisplay": {
+    "title": "Generation Result",
+    "loading": "Generating, please wait...",
+    "clickToGenerate": "Click the button above to start creating"
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "backToHome": "Back to Home",
+    "lastUpdated": "Last Updated: April 1, 2024"
+  },
+  "Terms": {
+    "title": "Terms of Service",
+    "backToHome": "Back to Home",
+    "lastUpdated": "Last Updated: April 1, 2024"
   }
 } 
