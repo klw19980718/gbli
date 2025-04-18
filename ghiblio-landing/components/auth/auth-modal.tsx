@@ -26,6 +26,9 @@ export function AuthModal({ isOpen, onClose, locale = 'zh' }: AuthModalProps) {
   // console.log('翻译测试:', t('AuthModal.title'), t('AuthModal.subtitle'));
 
   useEffect(() => {
+    // 确保在客户端环境
+    if (typeof window === 'undefined') return;
+    
     // 当模态框打开时禁止滚动
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -49,6 +52,7 @@ export function AuthModal({ isOpen, onClose, locale = 'zh' }: AuthModalProps) {
       console.log('当前语言:', locale);
       
       // 构建完整的回调URL
+      if (typeof window === 'undefined') return;
       const origin = window.location.origin;
       const redirectUrl = `${origin}/sso-callback`;
       const redirectUrlComplete = `${origin}/${locale}`;
@@ -150,7 +154,9 @@ export function AuthModal({ isOpen, onClose, locale = 'zh' }: AuthModalProps) {
             if (createdSessionId) {
               // 注册成功且创建了会话
               console.log('创建会话成功，准备跳转到首页');
-              window.location.href = '/';
+              if (typeof window !== 'undefined') {
+                window.location.href = '/';
+              }
             } else {
               // 注册成功但需要额外步骤
               console.log('注册成功但没有会话ID，显示成功消息');
@@ -169,7 +175,9 @@ export function AuthModal({ isOpen, onClose, locale = 'zh' }: AuthModalProps) {
             )) {
             console.log('邮箱已验证过，准备跳转');
             alert(t('AuthModal.alreadyVerified'));
-            window.location.href = '/';
+            if (typeof window !== 'undefined') {
+              window.location.href = '/';
+            }
             return;
           }
           throw error; // 重新抛出其他类型的错误
@@ -188,7 +196,9 @@ export function AuthModal({ isOpen, onClose, locale = 'zh' }: AuthModalProps) {
           if (result?.status === 'complete') {
             // 登录成功
             console.log('登录成功，准备跳转到首页');
-            window.location.href = '/';
+            if (typeof window !== 'undefined') {
+              window.location.href = '/';
+            }
           } else {
             console.log('登录验证未完成，状态:', result?.status);
           }
@@ -201,7 +211,9 @@ export function AuthModal({ isOpen, onClose, locale = 'zh' }: AuthModalProps) {
             )) {
             console.log('验证码已使用过，准备跳转');
             alert(t('AuthModal.alreadyVerified'));
-            window.location.href = '/';
+            if (typeof window !== 'undefined') {
+              window.location.href = '/';
+            }
             return;
           }
           throw error; // 重新抛出其他类型的错误

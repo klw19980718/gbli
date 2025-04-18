@@ -12,6 +12,9 @@ export function ClerkProviderWrapper({
 }) {
   // 添加调试日志
   useEffect(() => {
+    // 确保在客户端环境
+    if (typeof window === 'undefined') return;
+    
     console.log('ClerkProvider初始化 - 时间:', new Date().toISOString());
     try {
       console.log('存在localStorage中的Clerk相关键:', 

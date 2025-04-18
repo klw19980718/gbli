@@ -13,6 +13,8 @@ export default function SSOCallback() {
 
   // 输出详细的Clerk状态信息
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     console.log('=== SSO回调页面状态 ===');
     console.log('页面URL:', window.location.href);
     console.log('时间:', new Date().toISOString());
@@ -38,6 +40,9 @@ export default function SSOCallback() {
   }, [isSignInLoaded, isSignUpLoaded, isUserLoaded, isSignedIn, user, session]);
 
   useEffect(() => {
+    // 确保在客户端环境
+    if (typeof window === 'undefined') return;
+    
     // 记录页面加载
     console.log('SSO回调页面加载，URL:', window.location.href);
     
@@ -148,7 +153,7 @@ export default function SSOCallback() {
         </div>
         <h2 className="text-xl font-semibold">正在处理您的登录...</h2>
         <p className="mt-2 text-gray-500">请稍候，不要关闭此页面</p>
-        <p className="mt-2 text-xs text-gray-400">处理中: {window.location.search}</p>
+        <p className="mt-2 text-xs text-gray-400">处理中: {typeof window !== 'undefined' ? window.location.search : ''}</p>
       </div>
     </div>
   );

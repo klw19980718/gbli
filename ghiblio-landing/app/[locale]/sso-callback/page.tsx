@@ -21,8 +21,8 @@ export default function SSOCallback({ params }: SSOCallbackProps) {
   const router = useRouter();
 
   useEffect(() => {
-    // 确保Clerk已加载
-    if (!isSignInLoaded || !isSignUpLoaded) {
+    // 确保Clerk已加载且在客户端环境
+    if (!isSignInLoaded || !isSignUpLoaded || typeof window === 'undefined') {
       return;
     }
 
