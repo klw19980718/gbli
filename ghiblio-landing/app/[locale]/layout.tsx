@@ -11,18 +11,22 @@ export function generateStaticParams() {
   return locales.map(locale => ({ locale }));
 }
 
-export default function LocaleLayout({
+// Make the layout component async
+export default async function LocaleLayout({
   children,
-  params: { locale } // locale is automatically passed by Next.js
+  params // Accept the params object directly
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: string }; // Keep the type definition
 }) {
+  // Await params before accessing its properties
+  const { locale } = await params;
+
   // 简单验证语言是否支持 (optional, middleware should handle redirection)
   // if (!locales.includes(locale)) {
-  //   locale = 'zh'; // Default to Chinese if locale is invalid (though middleware should prevent this)
+  //   locale = 'zh'; // Default to Chinese if locale is invalid
   // }
 
-  // LocaleLayout should only return its children, as the root layout handles <html> and <body>
+  // LocaleLayout should only return its children
   return <>{children}</>;
 } 
