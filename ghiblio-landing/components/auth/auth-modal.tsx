@@ -219,8 +219,8 @@ export function AuthModal({ isOpen, onClose, locale = 'zh' }: AuthModalProps) {
   // 显示验证码输入界面
   if (verificationStep) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-        <div className="bg-white w-full max-w-md rounded-lg p-6 shadow-xl relative">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm !m-0 !p-0 w-screen h-screen">
+        <div className="bg-white w-full max-w-md rounded-lg p-6 shadow-xl relative mx-4">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -283,8 +283,8 @@ export function AuthModal({ isOpen, onClose, locale = 'zh' }: AuthModalProps) {
 
   // 显示登录/注册界面
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="bg-white w-full max-w-md rounded-lg p-6 shadow-xl relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm !m-0 !p-0 w-screen h-screen">
+      <div className="bg-white w-full max-w-md rounded-lg p-6 shadow-xl relative mx-4">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
