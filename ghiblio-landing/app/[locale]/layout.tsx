@@ -13,22 +13,16 @@ export function generateStaticParams() {
 
 export default function LocaleLayout({
   children,
-  params: { locale }
+  params: { locale } // locale is automatically passed by Next.js
 }: {
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  // 简单验证语言是否支持
-  if (!locales.includes(locale)) {
-    // 假设中文是默认语言
-    locale = 'zh';
-  }
+  // 简单验证语言是否支持 (optional, middleware should handle redirection)
+  // if (!locales.includes(locale)) {
+  //   locale = 'zh'; // Default to Chinese if locale is invalid (though middleware should prevent this)
+  // }
 
-  return (
-    <html lang={locale}>
-      <body className={inter.className}>
-        {children}
-      </body>
-    </html>
-  );
+  // LocaleLayout should only return its children, as the root layout handles <html> and <body>
+  return <>{children}</>;
 } 

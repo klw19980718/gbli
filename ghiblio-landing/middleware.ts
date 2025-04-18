@@ -1,55 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { locales, defaultLocale } from './i18n/request';
 
-// 支持的语言
-const locales = ['en', 'zh'];
-// 默认语言
-const defaultLocale = 'zh';
-
-// 静态资源文件正则
-const PUBLIC_FILE = /\.(.*)$/;
+// 匹配静态资源和 API 路径的正则表达式
+const PUBLIC_FILE = /\.(.*)$/; // Matches files with extensions (e.g., .jpg, .css)
+const API_ROUTE = /^\/api\//;   // Matches paths starting with /api/
 
 export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  
-  // 不处理静态资源、API 路由和已有语言前缀的路径
+  const { pathname } = request.nextUrl;
+
+  // 1. 检查是否为静态文件、API 路由或 Next.js 内部路径
   if (
     pathname.startsWith('/_next') ||
-    pathname.includes('/api/') ||
-    PUBLIC_FILE.test(pathname) ||
-    locales.some(locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
+    API_ROUTE.test(pathname) ||
+    PUBLIC_FILE.test(pathname)
   ) {
-    return;
+    return; // 不处理这些路径
   }
 
-  // 从 cookie 或 Accept-Language 头获取首选语言
-  const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value;
-  const acceptLanguage = request.headers.get('accept-language');
-  
-  let locale = defaultLocale;
-  
-  // 优先使用 cookie 中的语言
-  if (cookieLocale && locales.includes(cookieLocale)) {
-    locale = cookieLocale;
-  } 
-  // 然后尝试使用 Accept-Language 头
-  else if (acceptLanguage) {
-    const preferredLocale = acceptLanguage
-      .split(',')
-      .map(item => item.split(';')[0].trim())
-      .find(item => locales.includes(item.substring(0, 2)));
-    
-    if (preferredLocale) {
-      locale = preferredLocale.substring(0, 2);
-    }
-  }
-
-  // 重定向到带有语言前缀的 URL
-  return NextResponse.redirect(
-    new URL(`/${locale}${pathname === '/' ? '' : pathname}`, request.url)
+  // 2. 检查路径是否已经包含支持的语言前缀
+  const pathnameIsMissingLocale = locales.every(
+    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
+
+  // 3. 如果路径缺少语言前缀 (例如 /, /some/page)
+  if (pathnameIsMissingLocale) {
+    // 重定向到默认语言对应的路径
+    const url = request.nextUrl.clone();
+    url.pathname = `/${defaultLocale}${pathname === '/' ? '' : pathname}`;
+    // console.log(`Redirecting from ${pathname} to: ${url.pathname}`); // Debugging log
+    return NextResponse.redirect(url);
+  }
+
+  // 对于已有语言前缀的路径 (例如 /en/, /zh/some/page)，不执行任何操作
+  return; // Allow the request to proceed
 }
 
-// 只应用中间件到不带语言前缀的路径
 export const config = {
-  matcher: ['/((?!_next|api|.*\\..*).*)']
+  // 应用中间件到所有看起来像是页面的路径
+  // 排除: api, _next/static, _next/image, assets文件夹, favicon.ico, sw.js
+  matcher: [
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)',
+  ],
 }; 
